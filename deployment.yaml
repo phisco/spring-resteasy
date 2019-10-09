@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-java-app
+  namespace: demo
+  labels:
+    app: sample-java-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample-java-app      
+  template:
+    metadata:
+      labels:
+        app: sample-java-app
+    spec:
+      containers:
+      - name: sample-java-app
+        image: unicredit/myapp:1.0
+        ports:
+        - containerPort: 8080
+          name: http
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-java-app
+  namespace: demo
+spec:
+  selector:
+    app: sample-java-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: http
