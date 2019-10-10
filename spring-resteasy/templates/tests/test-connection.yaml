@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "spring-resteasy.fullname" . }}-test-connection"
+  labels:
+{{ include "spring-resteasy.labels" . | indent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['{{ include "spring-resteasy.fullname" . }}:{{ .Values.service.port }}/{artifactId}/hello?name=test']
+  restartPolicy: Never
