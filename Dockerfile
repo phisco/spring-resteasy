@@ -1,7 +1,7 @@
 # dockerfile to build image for JBoss EAP 7.1
 
 #start from eap71-openshift
-FROM nexus:8082/unicredit/apps/ 
+FROM nexus:8082/unicredit/apps/wildfly:17.0.1.Final
 
 # Copy war to deployments folder
 COPY target/spring-resteasy.war "$JBOSS_HOME/standalone/deployments/"
